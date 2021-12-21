@@ -1,0 +1,9 @@
+FROM golang:1.16.2
+
+WORKDIR /app
+
+COPY *.go ./
+COPY static ./static/
+COPY go.mod ./
+RUN ["go", "build", "dispatcher.go"]
+CMD [ "./dispatcher" ]
