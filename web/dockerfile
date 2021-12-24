@@ -1,4 +1,5 @@
-FROM golang:1.16.2
+# go that could run in base alpine image
+FROM golang:alpine
 
 WORKDIR /app
 
@@ -6,4 +7,9 @@ COPY *.go ./
 COPY static ./static/
 COPY go.mod ./
 RUN ["go", "build", "dispatcher.go"]
+
+FROM alpine
+WORKDIR /app
+COPY --from=0 /app/dispatcher ./
+COPY --from=0 /app/static ./static/
 CMD [ "./dispatcher" ]
