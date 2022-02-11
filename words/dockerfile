@@ -5,4 +5,7 @@ WORKDIR /app
 COPY pom.xml .
 COPY src src
 RUN mvn verify
+
+FROM openjdk:alpine
+COPY --from=0 /app/target /target
 CMD cd target ; exec java -Xmx8m -Xms8m -jar words.jar
